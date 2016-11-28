@@ -55,7 +55,11 @@
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\Cpu.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\IFsh1.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\IntFlashLdd1.c</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\OLED_RESET.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PE_LDD.c</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PTA.c</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\SCL.c</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\SDA.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\TI1.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\TU1.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\TimerIntLdd1.c</PathName>
@@ -64,6 +68,8 @@
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\Boot.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\Events.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\MessageDecoder.c</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\MicroGui_CharacterSet.c</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\OLED049.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\Reader.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\main.c</PathName>
     </GeneratedCs>
@@ -74,16 +80,21 @@
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\IFsh1.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\IO_Map.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\IntFlashLdd1.h</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\OLED_RESET.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PE_Const.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PE_Error.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PE_LDD.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PE_Types.h</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PTA.h</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\SCL.h</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\SDA.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\TI1.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\TU1.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\TimerIntLdd1.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\Boot.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\Events.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\MessageDecoder.h</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\OLED049.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Sources\Reader.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Static_Code\IO_Map\MKL02Z4.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Static_Code\PDD\ADC_PDD.h</PathName>

@@ -72,11 +72,7 @@ void Cpu_OnNMIINT(void)
 extern AudioReaderStruct Reader;
 void TI1_OnInterrupt(void)
 {
-	  AD1_Measure(TRUE);
-	  word V[2];
-	  AD1_GetValue16( V);
-
-	  AudioReader_Update(&Reader, V);
+	  AD1_Measure(FALSE);
   /* Write your code here ... */
 }
 
@@ -96,6 +92,11 @@ void TI1_OnInterrupt(void)
 */
 void AD1_OnEnd(void)
 {
+	  word V;
+	  AD1_GetValue16( &V);
+
+	  DecoderUpdate(V);
+
   /* Write your code here ... */
 }
 
