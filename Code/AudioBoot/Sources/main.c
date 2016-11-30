@@ -56,7 +56,9 @@ void  GUIProgress(byte progress)
 {
 	theprogress = progress;
 } // 255 = 99.999%
+extern void DecoderInit();
 
+int History[64];
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
@@ -85,6 +87,7 @@ int main(void)
 		{
 			buffer[Reader.Sync * 64 + x] = 255;
 		}
+
 		if (Reader.Sync == AUDIOREADER_SYNCED)
 		{
 			for (int i =0;i<theprogress/8;i++)
@@ -93,8 +96,14 @@ int main(void)
 			}
 
 		}
-		DrawStringHoriz(buffer, 0,0,"Hallo");
-		DrawStringHoriz(buffer, 0,10,"visje!");
+		//else
+		{
+			for(int i =0 ;i<64;i++)
+			{
+				int y =  16 + (((History[i]-32768) * 15)/400);
+				if (y>= 0 && y< 32) SetPixel(buffer, i, y);
+			}
+		}
 		OLED_Display(buffer);
 
 	}

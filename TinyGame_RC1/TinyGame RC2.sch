@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.5.0">
+<eagle version="7.7.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -1704,11 +1704,12 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <part name="U$4" library="adafruit" deviceset="FIDUCIAL" device=""/>
 <part name="SUPPLY9" library="SparkFun-Aesthetics" deviceset="3.3V" device=""/>
 <part name="GND16" library="SparkFun-Aesthetics" deviceset="GND" device=""/>
-<part name="R2" library="OPL" deviceset="R*" device="-0603" value="2K"/>
-<part name="R9" library="OPL" deviceset="R*" device="-0603" value="2K"/>
+<part name="R2" library="OPL" deviceset="R*" device="-0603" value="100K"/>
+<part name="R9" library="OPL" deviceset="R*" device="-0603" value="100K"/>
 <part name="R10" library="OPL" deviceset="R*" device="-0603" value="2K"/>
 <part name="C7" library="OPL" deviceset="C*" device="-0603" value="100nF"/>
 <part name="SJ1" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NC"/>
+<part name="STEREO" library="SparkFun-Passives" deviceset="SOLDERJUMPER" device="NC"/>
 </parts>
 <sheets>
 <sheet>
@@ -1804,8 +1805,9 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <instance part="R2" gate="R" x="85.09" y="41.91" rot="R90"/>
 <instance part="R9" gate="R" x="85.09" y="49.53" rot="R90"/>
 <instance part="R10" gate="R" x="95.25" y="45.72" rot="R180"/>
-<instance part="C7" gate="C" x="68.58" y="39.37" rot="R90"/>
+<instance part="C7" gate="C" x="68.58" y="41.91" rot="R90"/>
 <instance part="SJ1" gate="1" x="95.25" y="50.8"/>
+<instance part="STEREO" gate="1" x="68.58" y="29.21" rot="R90"/>
 </instances>
 <busses>
 </busses>
@@ -2206,7 +2208,7 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <pinref part="PTB1_RXTX" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="N$20" class="0">
+<net name="VBAT" class="0">
 <segment>
 <wire x1="120.65" y1="71.12" x2="120.65" y2="64.77" width="0.1524" layer="91"/>
 <pinref part="BATTERY_1" gate="G$1" pin="+"/>
@@ -2302,22 +2304,20 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <label x="135.89" y="73.66" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J1" gate="J" pin="R"/>
-<wire x1="68.58" y1="35.56" x2="68.58" y2="27.94" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="38.1" x2="68.58" y2="34.29" width="0.1524" layer="91"/>
 <pinref part="J1" gate="J" pin="L"/>
-<wire x1="68.58" y1="27.94" x2="68.58" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="2.54" x2="64.77" y2="2.54" width="0.1524" layer="91"/>
-<wire x1="64.77" y1="2.54" x2="64.77" y2="27.94" width="0.1524" layer="91"/>
-<wire x1="64.77" y1="27.94" x2="68.58" y2="27.94" width="0.1524" layer="91"/>
-<junction x="68.58" y="27.94"/>
+<wire x1="64.77" y1="2.54" x2="64.77" y2="34.29" width="0.1524" layer="91"/>
+<wire x1="64.77" y1="34.29" x2="68.58" y2="34.29" width="0.1524" layer="91"/>
 <label x="48.26" y="30.48" size="1.778" layer="95"/>
 <pinref part="C7" gate="C" pin="1"/>
+<pinref part="STEREO" gate="1" pin="2"/>
+<junction x="68.58" y="34.29"/>
 </segment>
 </net>
 <net name="DATAPREIN" class="0">
 <segment>
-<wire x1="68.58" y1="43.18" x2="71.12" y2="45.72" width="0.1524" layer="91"/>
-<wire x1="71.12" y1="45.72" x2="85.09" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="68.58" y1="45.72" x2="85.09" y2="45.72" width="0.1524" layer="91"/>
 <label x="72.39" y="45.72" size="1.778" layer="95"/>
 <pinref part="R2" gate="R" pin="2"/>
 <wire x1="85.09" y1="45.72" x2="90.17" y2="45.72" width="0.1524" layer="91"/>
@@ -2329,6 +2329,13 @@ Standard SMD solder jumper. Used to automate production. Two varients : Normally
 <wire x1="90.17" y1="45.72" x2="91.44" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="90.17" y1="50.8" x2="90.17" y2="45.72" width="0.1524" layer="91"/>
 <junction x="90.17" y="45.72"/>
+</segment>
+</net>
+<net name="N$1" class="0">
+<segment>
+<pinref part="J1" gate="J" pin="R"/>
+<pinref part="STEREO" gate="1" pin="1"/>
+<wire x1="68.58" y1="24.13" x2="68.58" y2="22.86" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

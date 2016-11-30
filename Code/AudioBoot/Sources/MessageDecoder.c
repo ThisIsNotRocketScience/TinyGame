@@ -183,7 +183,7 @@ void ByteReceived(AudioReaderStruct *S, int bytes, unsigned char Dat)
 
 			if (complete == CHUNKS && crcblock == crccheck)
 			{
-				if (Boot_FlashProg(MIN_APP_FLASH_ADDRESS + off, wribuf, 1024) == ERR_FAILED)
+				if (0)//Boot_FlashProg(MIN_APP_FLASH_ADDRESS + off, wribuf, 1024) == ERR_FAILED)
 				{
 					GUIErrorState();
 					flasherror++;
