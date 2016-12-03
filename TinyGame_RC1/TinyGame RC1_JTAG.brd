@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="6.5.0">
+<eagle version="7.7.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -23,19 +23,19 @@
 <layer number="13" name="Route13" color="4" fill="5" visible="no" active="no"/>
 <layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
 <layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
-<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="no" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
 <layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="yes"/>
 <layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
-<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
 <layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
 <layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
@@ -3936,6 +3936,9 @@ design rules under a new name.</description>
 <autorouter>
 <pass name="Default">
 <param name="RoutingGrid" value="5mil"/>
+<param name="AutoGrid" value="1"/>
+<param name="Efforts" value="0"/>
+<param name="TopRouterVariant" value="1"/>
 <param name="tpViaShape" value="round"/>
 <param name="PrefDir.1" value="*"/>
 <param name="PrefDir.2" value="0"/>
@@ -4031,13 +4034,13 @@ design rules under a new name.</description>
 <elements>
 <element name="3.3V_1" library="SparkFun-Connectors" package="1X01" value="M01PTH" x="13.335" y="20.828" smashed="yes"/>
 <element name="SWDIO" library="SparkFun-Connectors" package="1X01" value="M01PTH" x="5.715" y="20.828" smashed="yes">
-<attribute name="NAME" x="5.08" y="22.86" size="1.016" layer="26" rot="MR90"/>
+<attribute name="NAME" x="5.08" y="22.86" size="1.016" layer="22" rot="MR90"/>
 </element>
 <element name="SWCLK" library="SparkFun-Connectors" package="1X01" value="M01PTH" x="10.795" y="20.828" smashed="yes">
-<attribute name="NAME" x="10.16" y="22.86" size="1.016" layer="26" rot="MR90"/>
+<attribute name="NAME" x="10.16" y="22.86" size="1.016" layer="22" rot="MR90"/>
 </element>
 <element name="RESET" library="SparkFun-Connectors" package="1X01" value="M01PTH" x="8.255" y="20.828" smashed="yes">
-<attribute name="NAME" x="7.62" y="22.86" size="1.016" layer="26" rot="MR90"/>
+<attribute name="NAME" x="7.62" y="22.86" size="1.016" layer="22" rot="MR90"/>
 </element>
 <element name="GND_2" library="SparkFun-Connectors" package="1X01" value="M01PTH" x="3.175" y="20.828" smashed="yes"/>
 <element name="SWD1" library="carrilib with jtags" package="SWD_VERTICAL" value="CORTEX_SWDVERT" x="9.525" y="26.035" rot="R180"/>

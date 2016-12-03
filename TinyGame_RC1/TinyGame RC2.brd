@@ -8,7 +8,7 @@
 </settings>
 <grid distance="0.01" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.025" altunitdist="inch" altunit="inch"/>
 <layers>
-<layer number="1" name="Top" color="4" fill="1" visible="no" active="yes"/>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="1" fill="3" visible="no" active="no"/>
 <layer number="3" name="Route3" color="4" fill="3" visible="no" active="no"/>
 <layer number="4" name="Route4" color="1" fill="4" visible="no" active="no"/>
@@ -24,15 +24,15 @@
 <layer number="14" name="Route14" color="1" fill="6" visible="no" active="no"/>
 <layer number="15" name="Route15" color="4" fill="6" visible="no" active="no"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="no" active="yes"/>
-<layer number="17" name="Pads" color="2" fill="1" visible="no" active="yes"/>
-<layer number="18" name="Vias" color="2" fill="1" visible="no" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="19" name="Unrouted" color="6" fill="1" visible="no" active="yes"/>
-<layer number="20" name="Dimension" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="21" name="tPlace" color="7" fill="1" visible="no" active="yes"/>
-<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="15" fill="1" visible="no" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="no" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="no" active="yes"/>
-<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="no" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
@@ -158,7 +158,7 @@
 <wire x1="34.25" y1="0" x2="35" y2="0" width="0" layer="20"/>
 <wire x1="35" y1="0" x2="38" y2="3" width="0" layer="20" curve="90"/>
 <text x="31.25" y="19.75" size="0.6" layer="21" rot="R180" align="bottom-center">RX</text>
-<text x="28.5" y="19.75" size="0.6" layer="21" rot="R180" align="bottom-center">TX</text>
+<text x="28.92" y="19.75" size="0.6" layer="21" rot="R180" align="bottom-center">TX</text>
 <text x="33.975" y="19.745" size="0.6" layer="21" rot="R180" align="bottom-center">GND</text>
 <text x="13.335" y="19.495" size="0.6" layer="21" rot="R180" align="bottom-center">3.3V</text>
 <text x="10.795" y="19.495" size="0.6" layer="21" rot="R180" align="bottom-center">CLK</text>
@@ -2560,7 +2560,7 @@ design rules under a new name.</description>
 <attribute name="NAME" x="26.405" y="13.24" size="0.8" layer="25" ratio="11" rot="R180" align="center"/>
 </element>
 <element name="R7" library="OPL" package="R0603" value="2K" x="12.75" y="13" smashed="yes">
-<attribute name="NAME" x="11.125" y="11.75" size="0.8" layer="25" ratio="11" align="center"/>
+<attribute name="NAME" x="11.185" y="11" size="0.8" layer="25" ratio="11" align="center"/>
 </element>
 <element name="R8" library="OPL" package="R0603" value="2K" x="20" y="20.75" smashed="yes" rot="R180">
 <attribute name="NAME" x="22.5" y="20.75" size="0.8" layer="25" ratio="11" rot="R180" align="center"/>
@@ -2599,7 +2599,7 @@ design rules under a new name.</description>
 <attribute name="NAME" x="18.345" y="6.135" size="0.8" layer="25" ratio="11"/>
 </element>
 <element name="R9" library="OPL" package="R0603" value="100K" x="13.5" y="6.75" smashed="yes" rot="R180">
-<attribute name="NAME" x="14.28" y="5.74" size="0.8" layer="25" ratio="11" rot="R180"/>
+<attribute name="NAME" x="15.1" y="5.94" size="0.8" layer="25" ratio="11" rot="R180"/>
 </element>
 <element name="R10" library="OPL" package="R0603" value="2K" x="16.75" y="8.25" smashed="yes" rot="R180">
 <attribute name="NAME" x="18.345" y="8.01" size="0.8" layer="25" ratio="11"/>
