@@ -56,6 +56,7 @@ void  GUIProgress(byte progress)
 {
 	theprogress = progress;
 } // 255 = 99.999%
+
 extern void DecoderInit();
 
 int History[64];
