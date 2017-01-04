@@ -13,15 +13,16 @@
 
 unsigned char Contrast_level= 0x40;//0x8F;
 
-unsigned char i2c_end = 0;
-
+unsigned char i2c_end  = 0;
 void Delay(uint32_t N)
 {
 	for (uint32_t i =0 ;i<N;i++)
 	{
 		__asm("nop");
 	}
-}
+};
+
+
 
 void write_w(unsigned char dat)
 {
@@ -207,7 +208,7 @@ unsigned char GetPixel(unsigned char *pic, int x, int y)
 
 }
 
-void OLED_Blit(byte *pic, byte *minitiles, int sx, int sy, int sw, int sh, int xx,int yy)
+void OLED_Blit(const byte *pic, const byte *minitiles, int sx, int sy, int sw, int sh, int xx,int yy)
 {
 	if (xx > 63) return;
 	if (yy > 31) return;
@@ -230,6 +231,33 @@ void OLED_Blit(byte *pic, byte *minitiles, int sx, int sy, int sw, int sh, int x
 					else
 					{
 						ClrPixel(pic, xxx, yyy);
+					}
+				}
+			}
+
+		}
+	}
+}
+
+void OLED_Blit_Add(const byte *pic, const byte *minitiles, int sx, int sy, int sw, int sh, int xx,int yy)
+{
+	if (xx > 63) return;
+	if (yy > 31) return;
+	if (xx + sw < 0) return;
+	if (yy + sh < 0) return;
+	for(int y =0;y<sh;y++)
+	{
+		int yyy = yy + y;
+		if (yyy >=0 && yyy<= 31)
+		{
+			for (int x = 0;x<sw;x++)
+			{
+				int xxx = xx+x;
+				if (xxx >=0 && xxx<= 63)
+				{
+					if (GetPixel(minitiles, sx + x, sy + y))
+					{
+						SetPixel(pic, xxx, yyy);
 					}
 				}
 			}

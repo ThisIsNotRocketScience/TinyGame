@@ -41,6 +41,8 @@
 #include "SDA.h"
 #include "OLED_RESET.h"
 #include "PTA.h"
+#include "BOOTBUTTON.h"
+#include "PTB.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -52,11 +54,16 @@
 #include "OLED049.h"
 extern AudioReaderStruct Reader;
 byte theprogress =0 ;
-void  GUIProgress(byte progress)
+byte error = 0;
+void  GUIProgress(uint8_t progress)
 {
 	theprogress = progress;
 } // 255 = 99.999%
 
+void GUIErrorState()
+{
+	error++;
+}
 extern void DecoderInit();
 
 int History[64];
@@ -67,13 +74,14 @@ int main(void)
 	/* Write your local variable definition here */
 
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
- 	PE_low_level_init();
+	Boot_Check();
+
+	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
 
 	/* Write your code here */
 	/* For example: for(;;) { } */
 
-	Boot_Check();
 	AD1_Calibrate(TRUE);
 	OLED_Init();
 	unsigned char buffer[64*4];
@@ -86,16 +94,20 @@ int main(void)
 		ClearScr(buffer,0);
 		for (int x = 0;x<64;x++)
 		{
-			buffer[Reader.Sync * 64 + x] = 255;
+			buffer[Reader.Sync * 64 + x] = 1;
 		}
 
-		if (Reader.Sync == AUDIOREADER_SYNCED)
+		//if (Reader.Sync == AUDIOREADER_SYNCED)
 		{
-			for (int i =0;i<theprogress/8;i++)
+			for (int i =0;i<theprogress;i++)
 			{
-				buffer[i] = 0xff;
+				buffer[i] += 0x22;
 			}
 
+			for (int i =0;i<error;i++)
+			{
+				buffer[i] += 0x44;
+			}
 		}
 		//else
 		{

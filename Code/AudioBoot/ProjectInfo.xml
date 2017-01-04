@@ -52,12 +52,14 @@
     <GeneratedCs>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\AD1.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\AdcLdd1.c</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\BOOTBUTTON.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\Cpu.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\IFsh1.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\IntFlashLdd1.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\OLED_RESET.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PE_LDD.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PTA.c</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PTB.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\SCL.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\SDA.c</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\TI1.c</PathName>
@@ -75,6 +77,7 @@
     <GeneratedHs>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\AD1.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\AdcLdd1.h</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\BOOTBUTTON.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\Cpu.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\IFsh1.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\IO_Map.h</PathName>
@@ -85,6 +88,7 @@
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PE_LDD.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PE_Types.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PTA.h</PathName>
+      <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\PTB.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\SCL.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\SDA.h</PathName>
       <PathName>C:\Projects\Circuits\eagle\TinyGame\Code\AudioBoot\Generated_Code\TI1.h</PathName>

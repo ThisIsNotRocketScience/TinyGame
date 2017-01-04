@@ -2,10 +2,11 @@
 #define KL02BOOT
 
 #define FLASH_PAGE_SIZE 0x400
-#define MIN_APP_FLASH_ADDRESS 0x2000
+#define MIN_APP_FLASH_ADDRESS 0x2400
 #define MAX_APP_FLASH_ADDRESS 0x7fff
-#define APP_FLASH_VECTOR_START 0x2000
+#define APP_FLASH_VECTOR_START 0x2400
 #define APP_FLASH_VECTOR_SIZE 0xc0
+
 
 void Boot_Run();
 void Boot_Check();

@@ -7,6 +7,7 @@ int32_t avg = 9000;
 int32_t min = 9000;
 int32_t max = 9000;
 int32_t totalblocks =0 ;
+int32_t totalblocksflashed =0 ;
 
 #define CHUNKS (FLASH_PAGE_SIZE/AUDIOREADER_MAXCHUNK)
 #define FULLBLOCKS ((0x8000 - MIN_APP_FLASH_ADDRESS)/FLASH_PAGE_SIZE)
@@ -165,6 +166,8 @@ void ByteReceived(AudioReaderStruct *S, int bytes, unsigned char Dat)
 		for(int i =0 ;i<FULLBLOCKS;i++) fullblockshad[i] = 0;
 
 		totalblocks = ReadInt(rcvbuf, 4);
+		totalblocksflashed = 0;
+		GUIProgress(0);
 	}
 	break;
 	case 12:
@@ -178,12 +181,12 @@ void ByteReceived(AudioReaderStruct *S, int bytes, unsigned char Dat)
 			int complete =0 ;
 			for (int i =0 ;i<CHUNKS;i++)
 			{
-				if (blockshad[i] == 1) complete++;
+				if (blockshad[i] ==	 1) complete++;
 			}
 
 			if (complete == CHUNKS && crcblock == crccheck)
 			{
-				if (0)//Boot_FlashProg(MIN_APP_FLASH_ADDRESS + off, wribuf, 1024) == ERR_FAILED)
+				if (Boot_FlashProg(MIN_APP_FLASH_ADDRESS + off, wribuf, 1024) == ERR_FAILED)
 				{
 					GUIErrorState();
 					flasherror++;
@@ -192,6 +195,8 @@ void ByteReceived(AudioReaderStruct *S, int bytes, unsigned char Dat)
 				}
 				else
 				{
+					totalblocksflashed ++;
+					GUIProgress(((totalblocksflashed*255)/totalblocks));
 					fullblockshad[off/FLASH_PAGE_SIZE] = 1;
 					//GUISuccesState();
 					SuccesCountDown = 50000;

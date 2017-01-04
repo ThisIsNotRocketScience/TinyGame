@@ -20,6 +20,7 @@ int Tick =-1;
 //#include "Track.h"
 
 float msecspertick = 60000 / (143.1 * 96.0);
+#include "PatternGen.h"
 
 int TrackByte = 0;
 int nexttick = 0;
@@ -30,18 +31,37 @@ int NoteList[10];
 int LastArpNote = 0;
 float msecelapsed = 0;
 
-unsigned char track[100];
+unsigned char track[320];
 int TrackBytes = 320;
 
 void BuildTrack(int Seed)
 {
+	struct PatternGen_Target PT;
+	struct PatternGen_Random R;
+	PatternGen_RandomSeed(&R, Seed);
+	PatternGen_Goa(&PT, &R, 32);
 	TrackBytes =0 ;
 	for(int i =0 ;i<128;i++) ActiveNote[i] = 0;
 	ActiveNotes = 0;
 	TrackByte = 0;
 	Tmult = 0;
 					nexttick = 0;
+	for(int i = 0;i<32;i++)
+	{
+		uint32_t R = i * 24;
+		uint32_t R2 = i * 24 + 2;
 
+		track[TrackBytes++] = R&0xff;
+		track[TrackBytes++] = (R>>8)&0xff;
+		track[TrackBytes++] = 0;
+		track[TrackBytes++] = PT.Ticks[i].note + 60;
+		track[TrackBytes++] = PT.Ticks[i].note + 60;
+		track[TrackBytes++] = R2&0xff;
+		track[TrackBytes++] = (R2>>8)&0xff;
+		track[TrackBytes++] = 0;
+		track[TrackBytes++] = PT.Ticks[i].note + 60 + 0x80;
+		track[TrackBytes++] = PT.Ticks[i].note + 60 + 0x80;
+	}
 };
 
 unsigned char *currenttrack = track;
@@ -51,11 +71,6 @@ void UpdateMusic(int delta)
 {
 	timerticks++;
 	msecelapsed += delta;
-	PPG1_Disable(PPG1_DeviceData);
-
-	return;
-
-
 	while (msecelapsed >= msecspertick)
 	{
 		msecelapsed -=msecspertick;

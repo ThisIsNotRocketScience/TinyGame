@@ -13,15 +13,16 @@
 
 unsigned char Contrast_level= 0x40;//0x8F;
 
-unsigned char i2c_end = 0;
-
+unsigned char i2c_end  = 0;
 void Delay(uint32_t N)
 {
 	for (uint32_t i =0 ;i<N;i++)
 	{
 		__asm("nop");
 	}
-}
+};
+
+
 
 void write_w(unsigned char dat)
 {
@@ -187,12 +188,6 @@ void SetPixel(unsigned char *pic, int x, int y)
 	int idx = x  + ((y/8)*64);
 	pic[idx] |= 1<<(y%8);
 }
-
-void SetPixelSafe(unsigned char *pic, int x, int y)
-{
-	if (x>=0 && x<64 && y>=0 && y<32 ) SetPixel(pic,x,y);
-}
-
 
 void ClrPixel(unsigned char *pic, int x, int y)
 {

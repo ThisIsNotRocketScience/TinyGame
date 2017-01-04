@@ -51,11 +51,6 @@ void UpdateMusic(int delta)
 {
 	timerticks++;
 	msecelapsed += delta;
-	PPG1_Disable(PPG1_DeviceData);
-
-	return;
-
-
 	while (msecelapsed >= msecspertick)
 	{
 		msecelapsed -=msecspertick;
