@@ -22174,7 +22174,7 @@
       </ItemState>
       <ItemState>
         <ItemSymbol>MaximumTime</ItemSymbol>
-        <Value>21474857.96772138 sec</Value>
+        <Value />
       </ItemState>
       <ItemState>
         <ItemSymbol>_InitGrp</ItemSymbol>

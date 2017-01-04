@@ -35,7 +35,7 @@ extern "C" {
 
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
-
+#include "MessageDecoder.h"
 #include "Reader.h"
 /*
  ** ===================================================================

@@ -5,11 +5,57 @@
  *      Author: Stijn
  */
 
-
+#include "Cpu.h"
 #include "OLED049.h"
-#include "SDA.h"
-#include "SCL.h"
-#include "OLED_RESET.h"
+
+
+//B3 scl
+//B4 sda
+//B5 reset
+
+#define SCL 3
+#define SDA 4
+#define RESET 5
+
+void OLED_InitHardware()
+{
+	SIM_SCGC5   |= SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTB_MASK ;
+	GPIOB_PDDR |= (1<<SCL)| (1<<SDA) | (1<<RESET);
+	PORTB_PCR3 = PORT_PCR_MUX(0x01) ;
+	PORTB_PCR4 = PORT_PCR_MUX(0x01) ;
+	PORTB_PCR5 = PORT_PCR_MUX(0x01) ;
+}
+
+void SDA_SetVal()
+{
+	GPIOB_PSOR = (1<<SDA);
+}
+
+void SDA_ClrVal()
+{
+	GPIOB_PCOR= (1<<SDA);
+}
+
+void SCL_SetVal()
+{
+	GPIOB_PSOR = (1<<SCL);
+}
+
+void SCL_ClrVal()
+{
+	GPIOB_PCOR= (1<<SCL);
+}
+void OLED_RESET_SetVal()
+{
+	GPIOB_PSOR = (1<<RESET);
+}
+
+void OLED_RESET_ClrVal()
+{
+	GPIOB_PCOR= (1<<RESET);
+}
+
+
 
 unsigned char Contrast_level= 0x40;//0x8F;
 

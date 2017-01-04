@@ -2,7 +2,7 @@
 #include "Boot.h"
 #include "IFsh1.h"
 #include "Cpu.h"
-#include "BOOTBUTTON.h"
+
 
 uint8_t ValidAppAddress(dword addr){ return ((addr>=MIN_APP_FLASH_ADDRESS) && (addr<=MAX_APP_FLASH_ADDRESS)); }
 
@@ -48,7 +48,7 @@ uint8_t Boot_EraseAll(void)
 
 uint8_t GetButton()
 {
-	return  BOOTBUTTON_GetVal(0) == FALSE;
+	return  (GPIOB_PDIR & (1<<11))>0?1:0;
 }
 
 
@@ -68,7 +68,6 @@ void Boot_Check(void)
 	uint32_t startup;
 
 	SIM_SCGC5   |= SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTB_MASK ;
-	BOOTBUTTON_Init(NULL);
 	GPIOB_PDDR &= (uint32_t)~(uint32_t)(GPIO_PDDR_PDD(0x0800));
 	PORTB_PCR11 = PORT_PCR_MUX(0x01) | 3;
 	startup = ((uint32_t*)APP_FLASH_VECTOR_START)[1];

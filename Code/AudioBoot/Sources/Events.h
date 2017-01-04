@@ -40,11 +40,7 @@
 #include "TU1.h"
 #include "IFsh1.h"
 #include "IntFlashLdd1.h"
-#include "SCL.h"
-#include "SDA.h"
-#include "OLED_RESET.h"
 #include "PTA.h"
-#include "BOOTBUTTON.h"
 #include "PTB.h"
 
 #ifdef __cplusplus

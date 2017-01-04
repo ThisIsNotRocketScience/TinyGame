@@ -3,6 +3,7 @@ extern volatile uint8_t SR_lock;
 extern volatile uint8_t SR_reg;
 
 extern void EnterCritical();
+extern void ExitCritical();
 
 void EnterCritical()
 {

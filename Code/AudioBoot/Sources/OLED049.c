@@ -1,28 +1,54 @@
-/*
- * OLED049.c
- *
- *  Created on: 16 sep. 2014
- *      Author: Stijn
- */
-
-
+#include "Cpu.h"
 #include "OLED049.h"
-#include "SDA.h"
-#include "SCL.h"
-#include "OLED_RESET.h"
 
-unsigned char Contrast_level= 0x40;//0x8F;
 
-unsigned char i2c_end  = 0;
+//B3 scl
+//B4 sda
+//B5 reset
+
+#define OLEDSCL 3
+#define OLEDSDA 4
+#define OLEDRESET 5
+__attribute__ ((section (".resdat")))
+void OLED_InitHardware()
+{
+	PORTB_PCR3 = PORT_PCR_MUX(0x01);
+	PORTB_PCR4 = PORT_PCR_MUX(0x01);
+	PORTB_PCR5 = PORT_PCR_MUX(0x01);
+
+	GPIOB_PDDR |= (1 << OLEDSCL) | (1 << OLEDSDA) | (1 << OLEDRESET);
+}
+__attribute__ ((section (".resdat")))
 void Delay(uint32_t N)
 {
-	for (uint32_t i =0 ;i<N;i++)
+	for (volatile uint32_t i =0 ;i<N;i++)
 	{
-		__asm("nop");
+		__asm volatile("nop");
 	}
-};
+
+}
+__attribute__ ((section (".resdat")))
+void Delay10000()
+{
+	Delay(10000);
 
 
+}
+
+#define SDA_SET() GPIOB_PDOR |= (1<<OLEDSDA);
+#define SDA_CLR() GPIOB_PDOR &= ~(1<<OLEDSDA);
+#define SCL_SET() {GPIOB_PDOR |= (1<<OLEDSCL);};
+#define SCL_CLR() {GPIOB_PDOR &= ~(1<<OLEDSCL);Delay(1);};
+#define  OLED_RESET_SET() GPIOB_PDOR |= (1<<OLEDRESET);
+#define  OLED_RESET_CLR() GPIOB_PDOR &= ~(1<<OLEDRESET);
+
+
+unsigned char Contrast_level = 0x40;//0x8F;
+
+unsigned char i2c_end  = 0;
+
+
+__attribute__ ((section (".resdat")))
 
 void write_w(unsigned char dat)
 {
@@ -33,41 +59,41 @@ void write_w(unsigned char dat)
 	for (j= 0;j<8;j++)
 	{
 		m = da;
-		SCL_ClrVal(0);
+		SCL_CLR();
 		m = m&0x80;
 		if (m == 0x80)
 		{
-			SDA_SetVal(0);
+			SDA_SET();
 
 		}
 		else
 		{
-			SDA_ClrVal(0);
+			SDA_CLR();
 		}
 		da = da<<1;
-		SCL_SetVal(0);
+		SCL_SET();
 
 	}
-	SCL_ClrVal(0);
-	SCL_SetVal(0);
+	SCL_CLR();
+	SCL_SET();
 }
-
+__attribute__ ((section (".resdat")))
 void i2cstart()
 {
-	SCL_SetVal(0);
-	SDA_SetVal(0);
-	SDA_ClrVal(0);
-	SCL_ClrVal(0);
+	SCL_SET();
+	SDA_SET();
+	SDA_CLR();
+	SCL_CLR();
 }
-
+__attribute__ ((section (".resdat")))
 void i2cstop()
 {
-	SCL_ClrVal(0);
-	SDA_ClrVal(0);
-	SDA_SetVal(0);
-	SCL_SetVal(0);
+	SCL_CLR();
+	SDA_CLR();
+	SDA_SET();
+	SCL_SET();
 }
-
+__attribute__ ((section (".resdat")))
 void write_i(unsigned char ins)
 {
 	i2cstart();
@@ -78,6 +104,7 @@ void write_i(unsigned char ins)
 }
 
 // Set page address 0~15
+//__attribute__ ((section (".resdat")))
 void Set_Page_Address(unsigned char add)
 {
 	add+=32;
@@ -85,7 +112,7 @@ void Set_Page_Address(unsigned char add)
 	add=0xb0|add;
 	write_i(add);
 }
-
+//__attribute__ ((section (".resdat")))
 void Set_Column_Address(unsigned char add)
 {
 	add+=32;
@@ -117,52 +144,28 @@ void Display_Picture(unsigned char pic[])
 	return;
 }
 
+
+const unsigned char const initseq[25] = {0xAE,0x00,0x12,0x00,0xB0,0x81,0x4f,0xa1,0xa6,0xa8,0x1f,0xc8,0xd3,0x00,0xd5,0x80,0xd9,0x1f,0xda,0x12,0xdb,0x40,0x8d,0x14,0xaf};
+
+__attribute__ ((section (".resdat")))
 void OLED_Init()
 {
-	OLED_RESET_SetVal(0);
-	Delay(10000);
-	OLED_RESET_ClrVal(0);
-	Delay(10000);
-	OLED_RESET_SetVal(0);
-	Delay(10000);
-	write_i(0xAE);
-	write_i(0x00);
-	write_i(0x12);
-	write_i(0x00);
-	write_i(0xB0);
-	write_i(0x81);
-	write_i(0x4f);
-	write_i(0xa1);
-
-	write_i(0xa6);
-	write_i(0xa8);
-	write_i(0x1f);
-	write_i(0xc8);
-	write_i(0xd3);
-	write_i(0x00);
-	write_i(0xd5);
-	write_i(0x80);
-	write_i(0xd9);
-	write_i(0x1f);
-	write_i(0xda);
-	write_i(0x12);
-	write_i(0xdb);
-	write_i(0x40);
-
-	write_i(0x8d);
-	write_i(0x14); // 0x10 = on,
-
-	write_i(0xaf);
+	OLED_InitHardware();
+	OLED_RESET_SET();
+	Delay10000();
+	OLED_RESET_CLR();
+	Delay10000();
+	OLED_RESET_SET();
+	Delay10000();
 
 
-
-	Delay(10000);
-
-
+	for(int i =0 ;i< 25;i++) write_i(initseq[i]);
+	Delay10000();
 }
 
 byte pic2[64*4];
 int t = 0;
+
 void OLED_PictureTest()
 {
 	t++;
@@ -172,7 +175,7 @@ void OLED_PictureTest()
 	}
 	Display_Picture(pic2);
 }
-
+__attribute__ ((section (".resdat")))
 void OLED_Display(unsigned char *pic)
 {
 	Display_Picture(pic);
@@ -445,7 +448,7 @@ void ClearScr(unsigned char *pic, byte pattern)
 {
 	for (int i =0 ;i<64*4;i++) pic[i] = pattern;
 }
-
+__attribute__ ((section (".resdat")))
 void SetPixel(unsigned char *pic, int x, int y)
 {
 	int idx = x  + ((y/8)*64);
@@ -457,7 +460,7 @@ void ClrPixel(unsigned char *pic, int x, int y)
 	int idx = x  + ((y/8)*64);
 	pic[idx] &=  ~(1<<(y%8));
 }
-
+__attribute__ ((section (".resdat")))
 unsigned char GetPixel(unsigned char *pic, int x, int y)
 {
 	int idx = x  + ((y/8)*64);
@@ -466,13 +469,13 @@ unsigned char GetPixel(unsigned char *pic, int x, int y)
 }
 
 
-
+__attribute__ ((section (".resdat")))
 void OLED_Blit(byte *pic, byte *minitiles, int sx, int sy, int sw, int sh, int xx,int yy)
 {
-	if (xx > 63) return;
-	if (yy > 31) return;
-	if (xx + sw < 0) return;
-	if (yy + sh < 0) return;
+	//if (xx > 63) return;
+	//if (yy > 31) return;
+	//if (xx + sw < 0) return;
+	//if (yy + sh < 0) return;
 	for(int y =0;y<sh;y++)
 	{
 		int yyy = yy + y;

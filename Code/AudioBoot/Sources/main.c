@@ -37,11 +37,7 @@
 #include "TU1.h"
 #include "IFsh1.h"
 #include "IntFlashLdd1.h"
-#include "SCL.h"
-#include "SDA.h"
-#include "OLED_RESET.h"
 #include "PTA.h"
-#include "BOOTBUTTON.h"
 #include "PTB.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
@@ -66,7 +62,45 @@ void GUIErrorState()
 }
 extern void DecoderInit();
 
+
+__attribute__ ((section (".resdat")))
+const unsigned char const Image[64*4] =
+{3,3,3,255,255,255,3,3,3,0,0,251,251,251,0,0,255,255,255,6,3,3,255,254,254,0,0,31,63,63,240,240,240,63,63,31,0,0,0,95,80,80,64,95,81,95,64,95,73,95,64,95,81,94,64,95,85,81,64,95,66,65,0,0,126,255,255,195,219,219,219,251,123,0,0,252,254,255,51,51,51,255,254,252,0,0,255,255,255,6,3,3,255,255,255,6,3,3,255,255,254,0,0,126,255,255,219,219,219,195,195,195,0,0,0,0,0,128,128,128,128,128,128,128,128,128,128,128,196,190,64,58,234,110,98,42,254,78,200,62,238,106,186,62,234,56,194,2,62,62,234,126,78,42,254,156,98,28,192,178,72,38,192,64,192,0,192,128,64,0,192,0,192,0,0,0,0,0,0,160,0,255,128,190,138,142,128,188,136,132,128,255,255,40,56,0,255,21,12,0,255,138,255,0,255,140,207,0,249,23,9,0,248,168,143,5,188,168,239,0,184,168,239,0,80,0,7,4,143,168,255,112,248,248,221,248,117,32,0,0,0,0,245,170,245,255,128,174,170,186,128,190,168,160,128,255};
 int History[64];
+unsigned char buffer[64*4];
+
+void InitSequence()
+{
+	ClearScr(buffer,0);
+	OLED_Blit(buffer, Image, 53, 15, 11,17,27,7);
+	for(int i =0 ;i<120;i++)
+		{
+			OLED_Display(buffer);
+		}
+
+	for(int i =0 ;i<32;i++)
+	{
+	ClearScr(buffer,0);
+	OLED_Blit(buffer, Image, 0, 0, 37,8,4,40-i);
+	OLED_Blit(buffer, Image, 0, 8, 48,8,10,40-i+9);
+	OLED_Display(buffer);
+	OLED_Display(buffer);
+	}
+	for(int i =0 ;i<120;i++)
+	{
+		OLED_Display(buffer);
+	}
+
+
+	for(int i =0 ;i<60;i++)
+	{
+	ClearScr(buffer,0);
+	OLED_Blit(buffer, Image, 0, 0, 37,8,4+i,8);
+	OLED_Blit(buffer, Image, 0, 8, 48,8,10-i,8+9);
+	OLED_Display(buffer);
+	OLED_Display(buffer);
+	}
+}
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
@@ -84,39 +118,49 @@ int main(void)
 
 	AD1_Calibrate(TRUE);
 	OLED_Init();
-	unsigned char buffer[64*4];
 	ClearScr(buffer,0);
 	OLED_Display(buffer);
+
+	InitSequence();
+
 	DecoderInit();
 	int T = 0;
 	for(;;) {
 		T++;
 		ClearScr(buffer,0);
-		for (int x = 0;x<64;x++)
-		{
-			buffer[Reader.Sync * 64 + x] = 1;
-		}
+		//OLED_Blit(buffer, Image, 0, 0, 64,32,0,0);
 
-		//if (Reader.Sync == AUDIOREADER_SYNCED)
+		//for (int x = 0;x<64;x++)
+		//{
+		//		buffer[Reader.Sync * 64 + x] = 1;
+		//	}
+		OLED_Blit(buffer, Image, 39, 0, 23,7,21,2);
+		OLED_Blit(buffer, Image, 50, 20 + Reader.Sync*3, 3,3,17,4);
+		if (Reader.Sync == AUDIOREADER_SYNCED || theprogress>0 || error>0)
 		{
-			for (int i =0;i<theprogress;i++)
 			{
-				buffer[i] += 0x22;
+
+				OLED_Blit(buffer, Image, 0, 27, 33,5,1,12);
+				for (int i =0;i<theprogress;i++)
+				{
+					SetPixel(buffer, i/4, 19 + i%4);
+				}
 			}
 
-			for (int i =0;i<error;i++)
+			if (error>0)
 			{
-				buffer[i] += 0x44;
+				OLED_Blit(buffer, Image, 22, 22, 25,5,1,25);
 			}
 		}
 		//else
 		{
 			for(int i =0 ;i<64;i++)
 			{
-				int y =  16 + (((History[i]-32768) * 15)/400);
+				int y =  24 + (((History[i]-32768) * 15)/22600);
 				if (y>= 0 && y< 32) SetPixel(buffer, i, y);
 			}
 		}
+		//OLED_Blit(buffer, buffer, 10,10,10,10,10,10);
 		OLED_Display(buffer);
 
 	}
