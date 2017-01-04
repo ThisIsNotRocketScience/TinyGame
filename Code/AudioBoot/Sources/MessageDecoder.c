@@ -56,6 +56,8 @@ void __attribute__ ((weak)) GUISuccesState() {SuccesCountDown = 20000;}
 void __attribute__ ((weak)) GUIProgress(byte progress) {} // 255 = 99.999%
 void __attribute__ ((weak)) GUIComplete(){ Reboot(); }
 
+void __attribute__ ((weak)) GUIReset(){ }
+
 uint32_t CalcCrc(uint32_t crc, uint8_t *buf, uint32_t length)
 {
 	int k;
@@ -150,8 +152,9 @@ void ByteReceived(AudioReaderStruct *S, int bytes, unsigned char Dat)
 		}
 	}break;
 
-	case 4:
-	{
+
+	case 8:
+
 		if (rcvbuf[0] == 'K' && rcvbuf[1] == 'I' && rcvbuf[2] == 'L' && rcvbuf[3] == 'L')
 		{
 			Boot_EraseAll();
@@ -162,8 +165,6 @@ void ByteReceived(AudioReaderStruct *S, int bytes, unsigned char Dat)
 		{
 			Reboot();
 		}
-	}break;
-	case 8:
 	if (rcvbuf[0] == 'D' && rcvbuf[1] == 'O' && rcvbuf[2] == 'I' && rcvbuf[3] == 'T')
 	{
 		flasherror = 0 ;
@@ -173,7 +174,7 @@ void ByteReceived(AudioReaderStruct *S, int bytes, unsigned char Dat)
 		totalblocks = ReadInt(rcvbuf, 4);
 		totalblocksflashed = 0;
 		totalchunksreceived = 0;
-		GUIProgress(0);
+		GUIReset();
 	}
 	break;
 	case 12:
@@ -202,6 +203,7 @@ void ByteReceived(AudioReaderStruct *S, int bytes, unsigned char Dat)
 				else
 				{
 					totalblocksflashed ++;
+					if (totalblocks == totalblocksflashed) Reboot();
 					fullblockshad[off/FLASH_PAGE_SIZE] = 1;
 					//GUISuccesState();
 					SuccesCountDown = 50000;

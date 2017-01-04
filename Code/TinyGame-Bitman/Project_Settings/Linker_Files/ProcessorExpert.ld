@@ -10,7 +10,7 @@
 /*##                                   */
 /*##     Compiler  : GNU C Compiler    */
 /*##                                   */
-/*##     Date/Time : 2017-01-04, 01:15, # CodeGen: 12 */
+/*##     Date/Time : 2017-01-04, 15:53, # CodeGen: 16 */
 /*##                                   */
 /*##     Abstract  :                   */
 /*##                                   */
@@ -37,8 +37,8 @@ __heap_size = 0x0100;                  /* required amount of heap  */
 __stack_size = 0x0100;                 /* required amount of stack */
 
 MEMORY {
-  m_interrupts (RX) : ORIGIN = 0x00002000, LENGTH = 0x000000C0
-  m_text      (RX) : ORIGIN = 0x000020C0, LENGTH = 0x00005CF0
+  m_interrupts (RX) : ORIGIN = 0x00002400, LENGTH = 0x000000C0
+  m_text      (RX) : ORIGIN = 0x000024C0, LENGTH = 0x000058F0
   m_data      (RW) : ORIGIN = 0x1FFFFC00, LENGTH = 0x00001000
   m_cfmprotrom  (RX) : ORIGIN = 0x00000400, LENGTH = 0x00000010
 }

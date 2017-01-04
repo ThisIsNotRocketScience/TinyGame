@@ -31,8 +31,9 @@ __attribute__ ((section (".resdat")))
 void Delay10000()
 {
 	Delay(10000);
-
-
+	Delay(10000);
+	Delay(10000);
+	Delay(10000);
 }
 
 #define SDA_SET() GPIOB_PDOR |= (1<<OLEDSDA);

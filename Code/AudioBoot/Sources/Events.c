@@ -91,7 +91,7 @@ void TI1_OnInterrupt(void)
  ** ===================================================================
  */
 
-int historypos = 0;
+extern int historypos;
 extern int History[64];
 void AD1_OnEnd(void)
 {

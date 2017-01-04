@@ -10,7 +10,7 @@
 /*##                                   */
 /*##     Compiler  : GNU C Compiler    */
 /*##                                   */
-/*##     Date/Time : 2017-01-04, 03:20, # CodeGen: 23 */
+/*##     Date/Time : 2017-01-04, 14:25, # CodeGen: 24 */
 /*##                                   */
 /*##     Abstract  :                   */
 /*##                                   */
@@ -53,7 +53,6 @@ SECTIONS
     . = ALIGN(4);
     KEEP(*(.vectortable)) /* Startup code */
     . = ALIGN(4);
-    KEEP(*(.resdat)) /* Oled code */
   } > m_interrupts
 
   .cfmprotect :

@@ -1,10 +1,3 @@
-/*
- * OLED049.c
- *
- *  Created on: 16 sep. 2014
- *      Author: Stijn
- */
-
 #include "Cpu.h"
 #include "OLED049.h"
 
@@ -13,61 +6,48 @@
 //B4 sda
 //B5 reset
 
-#define SCL 3
-#define SDA 4
-#define RESET 5
-
+#define OLEDSCL 3
+#define OLEDSDA 4
+#define OLEDRESET 5
+__attribute__ ((section (".resdat")))
 void OLED_InitHardware()
 {
-	SIM_SCGC5   |= SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTB_MASK ;
-	GPIOB_PDDR |= (1<<SCL)| (1<<SDA) | (1<<RESET);
-	PORTB_PCR3 = PORT_PCR_MUX(0x01) ;
-	PORTB_PCR4 = PORT_PCR_MUX(0x01) ;
-	PORTB_PCR5 = PORT_PCR_MUX(0x01) ;
+	PORTB_PCR3 = PORT_PCR_MUX(0x01);
+	PORTB_PCR4 = PORT_PCR_MUX(0x01);
+	PORTB_PCR5 = PORT_PCR_MUX(0x01);
+
+	GPIOB_PDDR |= (1 << OLEDSCL) | (1 << OLEDSDA) | (1 << OLEDRESET);
+}
+__attribute__ ((section (".resdat")))
+void Delay(uint32_t N)
+{
+	for (volatile uint32_t i =0 ;i<N;i++)
+	{
+		__asm volatile("nop");
+	}
+
+}
+__attribute__ ((section (".resdat")))
+void Delay10000()
+{
+	Delay(10000);
+
+
 }
 
-void SDA_SetVal()
-{
-	GPIOB_PSOR = (1<<SDA);
-}
-
-void SDA_ClrVal()
-{
-	GPIOB_PCOR= (1<<SDA);
-}
-
-void SCL_SetVal()
-{
-	GPIOB_PSOR = (1<<SCL);
-}
-
-void SCL_ClrVal()
-{
-	GPIOB_PCOR= (1<<SCL);
-}
-void OLED_RESET_SetVal()
-{
-	GPIOB_PSOR = (1<<RESET);
-}
-
-void OLED_RESET_ClrVal()
-{
-	GPIOB_PCOR= (1<<RESET);
-}
-
+#define SDA_SET() GPIOB_PDOR |= (1<<OLEDSDA);
+#define SDA_CLR() GPIOB_PDOR &= ~(1<<OLEDSDA);
+#define SCL_SET() {GPIOB_PDOR |= (1<<OLEDSCL);};
+#define SCL_CLR() {GPIOB_PDOR &= ~(1<<OLEDSCL);Delay(1);};
+#define  OLED_RESET_SET() GPIOB_PDOR |= (1<<OLEDRESET);
+#define  OLED_RESET_CLR() GPIOB_PDOR &= ~(1<<OLEDRESET);
 
 
 unsigned char Contrast_level= 0x40;//0x8F;
 
 unsigned char i2c_end = 0;
 
-void Delay(uint32_t N)
-{
-	for (uint32_t i =0 ;i<N;i++)
-	{
-		__asm("nop");
-	}
-}
+
 
 void write_w(unsigned char dat)
 {
@@ -78,39 +58,39 @@ void write_w(unsigned char dat)
 	for (j= 0;j<8;j++)
 	{
 		m = da;
-		SCL_ClrVal(0);
+		SCL_CLR();
 		m = m&0x80;
 		if (m == 0x80)
 		{
-			SDA_SetVal(0);
+			SDA_SET();
 
 		}
 		else
 		{
-			SDA_ClrVal(0);
+			SDA_CLR();
 		}
 		da = da<<1;
-		SCL_SetVal(0);
+		SCL_SET();
 
 	}
-	SCL_ClrVal(0);
-	SCL_SetVal(0);
+	SCL_CLR();
+	SCL_SET();
 }
 
 void i2cstart()
 {
-	SCL_SetVal(0);
-	SDA_SetVal(0);
-	SDA_ClrVal(0);
-	SCL_ClrVal(0);
+	SCL_SET();
+	SDA_SET();
+	SDA_CLR();
+	SCL_CLR();
 }
 
 void i2cstop()
 {
-	SCL_ClrVal(0);
-	SDA_ClrVal(0);
-	SDA_SetVal(0);
-	SCL_SetVal(0);
+	SCL_CLR();
+	SDA_CLR();
+	SDA_SET();
+	SCL_SET();
 }
 
 void write_i(unsigned char ins)
@@ -164,11 +144,13 @@ void Display_Picture(unsigned char pic[])
 
 void OLED_Init()
 {
-	OLED_RESET_SetVal(0);
+	OLED_InitHardware();
+
+	OLED_RESET_SET();
 	Delay(10000);
-	OLED_RESET_ClrVal(0);
+	OLED_RESET_CLR();
 	Delay(10000);
-	OLED_RESET_SetVal(0);
+	OLED_RESET_SET();
 	Delay(10000);
 	write_i(0xAE);
 	write_i(0x00);

@@ -51,11 +51,17 @@
 extern AudioReaderStruct Reader;
 byte theprogress =0 ;
 byte error = 0;
+byte started = 0;
 void  GUIProgress(uint8_t progress)
 {
 	theprogress = progress;
 } // 255 = 99.999%
-
+void  GUIReset()
+{
+	theprogress =0;
+	error =0 ;
+	started = 1;
+} // 255 = 99.999%
 void GUIErrorState()
 {
 	error++;
@@ -67,6 +73,8 @@ __attribute__ ((section (".resdat")))
 const unsigned char const Image[64*4] =
 {3,3,3,255,255,255,3,3,3,0,0,251,251,251,0,0,255,255,255,6,3,3,255,254,254,0,0,31,63,63,240,240,240,63,63,31,0,0,0,95,80,80,64,95,81,95,64,95,73,95,64,95,81,94,64,95,85,81,64,95,66,65,0,0,126,255,255,195,219,219,219,251,123,0,0,252,254,255,51,51,51,255,254,252,0,0,255,255,255,6,3,3,255,255,255,6,3,3,255,255,254,0,0,126,255,255,219,219,219,195,195,195,0,0,0,0,0,128,128,128,128,128,128,128,128,128,128,128,196,190,64,58,234,110,98,42,254,78,200,62,238,106,186,62,234,56,194,2,62,62,234,126,78,42,254,156,98,28,192,178,72,38,192,64,192,0,192,128,64,0,192,0,192,0,0,0,0,0,0,160,0,255,128,190,138,142,128,188,136,132,128,255,255,40,56,0,255,21,12,0,255,138,255,0,255,140,207,0,249,23,9,0,248,168,143,5,188,168,239,0,184,168,239,0,80,0,7,4,143,168,255,112,248,248,221,248,117,32,0,0,0,0,245,170,245,255,128,174,170,186,128,190,168,160,128,255};
 int History[64];
+int historypos = 0;
+
 unsigned char buffer[64*4];
 
 void InitSequence()
@@ -104,7 +112,7 @@ void InitSequence()
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
-{
+  {
 	/* Write your local variable definition here */
 
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
@@ -136,27 +144,29 @@ int main(void)
 		//	}
 		OLED_Blit(buffer, Image, 39, 0, 23,7,21,2);
 		OLED_Blit(buffer, Image, 50, 20 + Reader.Sync*3, 3,3,17,4);
-		if (Reader.Sync == AUDIOREADER_SYNCED || theprogress>0 || error>0)
+		if (started==1)
 		{
 			{
 
 				OLED_Blit(buffer, Image, 0, 27, 33,5,1,12);
+				OLED_Blit(buffer, Image, 36, 27, 10,5,theprogress/4+2,22);
 				for (int i =0;i<theprogress;i++)
 				{
-					SetPixel(buffer, i/4, 19 + i%4);
+					SetPixel(buffer, i/4, 23 + i%3);
 				}
+
 			}
 
 			if (error>0)
 			{
-				OLED_Blit(buffer, Image, 22, 22, 25,5,1,25);
+				OLED_Blit(buffer, Image, 22, 22, 25,5,1,26);
 			}
 		}
 		//else
 		{
 			for(int i =0 ;i<64;i++)
 			{
-				int y =  24 + (((History[i]-32768) * 15)/22600);
+				int y =  24 + (((History[(i+historypos)&63]-32768) * 15)/22600);
 				if (y>= 0 && y< 32) SetPixel(buffer, i, y);
 			}
 		}

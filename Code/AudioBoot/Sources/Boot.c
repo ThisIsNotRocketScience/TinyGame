@@ -7,7 +7,8 @@
 uint8_t ValidAppAddress(dword addr){ return ((addr>=MIN_APP_FLASH_ADDRESS) && (addr<=MAX_APP_FLASH_ADDRESS)); }
 
 void  __attribute__((optimize("-O0"))) Reboot()
-				{
+{
+	__DI();
 #if KIN1_IS_USING_KINETIS_SDK
 	SCB_AIRCR = (0x5FA<<SCB_AIRCR_VECTKEY_Pos)|SCB_AIRCR_SYSRESETREQ_Msk;
 #else
@@ -72,7 +73,7 @@ void Boot_Check(void)
 	PORTB_PCR11 = PORT_PCR_MUX(0x01) | 3;
 	startup = ((uint32_t*)APP_FLASH_VECTOR_START)[1];
 	uint8_t checkb = Boot_CheckButtons();
-	if (startup!=-1 && startup!=0 && checkb == 0)
+	if (startup!=-1 && startup!=0 && checkb == 1)
 	{
 		__DI();
 		((void(*)(void))startup)();
