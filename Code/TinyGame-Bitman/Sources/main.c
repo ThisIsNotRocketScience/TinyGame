@@ -284,6 +284,10 @@ void SpriteDemo()
 
 	}
 }
+
+extern void TDelay(int ticks);
+
+
 void Succes()
 {
 	bool menu = TRUE;
@@ -324,7 +328,7 @@ void Succes()
 	for (int i = 0;i<32;i++)
 		{
 			ClearScr(pic);
-			OLED_Blit( pic, spiffing,0,0,64,32,0,-i );
+//			OLED_Blit( pic, spiffing,0,0,64,32,0,-i );
 
 			OLED_Display(pic);
 			TDelay(20);
@@ -337,7 +341,7 @@ void UpdateTimeForMusic();
 
 void Menu()
 {
-	BuildTrack(0);
+	//BuildTrack(0);
 	//Succes();
 	bool menu = TRUE;
 	int t = 0;
@@ -421,7 +425,8 @@ void drawdigit(byte *PP,byte dig, int xx, int yy)
 	OLED_Blit(PP, tiles, dig * 3, 0 ,3, 5, xx,yy);
 }
 #define MAXPARTICLE 30
-typedef struct TParticle
+
+struct TParticle
 {
 	signed char dx, dy;
 	unsigned short x,y,a;
@@ -474,6 +479,12 @@ void SpawnParticle(int G, int x,int y, signed char dx, signed char dy)
 		}
 	}
 }
+
+uint8_t iabs(uint32_t inp)
+{
+	if (inp > 0) return inp;
+	return -inp;
+}
 bool RenderLevel(byte *PP, int cx, int t, bool *above, bool *below, int *x, int *y, byte *score)
 {
 	//drawdigit(PP, *score, 60,1);
@@ -495,7 +506,7 @@ bool RenderLevel(byte *PP, int cx, int t, bool *above, bool *below, int *x, int 
 			{
 				OLED_Blit(PP, tiles, 0 + 7 * (t%3),16,7,7, activelevel[i]->x-3 - cx,activelevel[i]->y-3);
 
-				if (abs(activelevel[i]->x - *x) <3 && abs(activelevel[i]->y - *y)<4)
+				if (iabs(activelevel[i]->x - *x) <3 && iabs(activelevel[i]->y - *y)<4)
 				{
 					*score = *score + 1;
 					activelevel[i]->param1 = 1;
@@ -512,7 +523,7 @@ bool RenderLevel(byte *PP, int cx, int t, bool *above, bool *below, int *x, int 
 			OLED_Blit(PP, tiles, 0 + 5 * t2,23,5,9, activelevel[i]->x-3 - cx  - off[t2] + 3,activelevel[i]->y - 6-3);
 			OLED_Blit(PP, tiles, 25 + 7 * (t%2),27,7,5, activelevel[i]->x-3 - cx,activelevel[i]->y+5 - 6);
 
-			if (abs(activelevel[i]->x - *x) <3 && abs(activelevel[i]->y - *y-4)<5)
+			if (iabs(activelevel[i]->x - *x) <3 && iabs(activelevel[i]->y - *y-4)<5)
 			{
 				*score = *score + 1;
 				return TRUE;
@@ -564,7 +575,7 @@ bool Game()
 	while (level < levelset[0])
 	{
 		LoadLevel(level);
-		BuildTrack(level * 10 + 1);
+		//BuildTrack(level * 10 + 1);
 		unsigned char n = 0;
 		int x =  3;
 		int y =  10;

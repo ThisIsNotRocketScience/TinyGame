@@ -245,6 +245,8 @@ void UpdateTimeForMusic()
 		UpdateMusic(dt);
 		lastt = t;
 	}
+}
+
 int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
 {
