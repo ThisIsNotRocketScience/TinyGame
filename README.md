@@ -5,4 +5,4 @@ Firmware updatable through the audio jack
 
 Soon available on www.thisisnotrocketscience.nl 
 
-Follow our progress
+Follow our progress on [twitter](https://twitter.com/rocket_not) 
