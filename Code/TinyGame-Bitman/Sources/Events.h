@@ -45,6 +45,9 @@
 #include "PPG1.h"
 #include "RT1.h"
 #include "WAIT1.h"
+#include "TI1.h"
+#include "TimerIntLdd1.h"
+#include "TU1.h"
 #include "AudioSwitch.h"
 #include "PTA.h"
 

@@ -41,6 +41,9 @@
 #include "PPG1.h"
 #include "RT1.h"
 #include "WAIT1.h"
+#include "TI1.h"
+#include "TimerIntLdd1.h"
+#include "TU1.h"
 #include "AudioSwitch.h"
 #include "PTA.h"
 /* Including shared modules, which are used for whole project */
@@ -52,7 +55,7 @@
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
 #include "OLED049.h"
-
+#include "Music.h"
 
 typedef struct __attribute__ ((__packed__))
 {
@@ -63,7 +66,6 @@ typedef struct __attribute__ ((__packed__))
 	byte param2;
 } entity;
 
-#include <math.h>
 entity *activelevel[30];
 int activeentities = 0;
 bool HasGround = FALSE;
@@ -236,15 +238,7 @@ bool AnyKey()
 
 	return B;
 }
-void ShowWin()
-{
 
-}
-
-void ShowGameOver()
-{
-
-}
 void SpriteDemo()
 {
 	bool spritedemo = TRUE;
@@ -502,9 +496,9 @@ bool RenderLevel(byte *PP, int cx, int t, bool *above, bool *below, int *x, int 
 			if (activelevel[i]->param1 == 0)
 			{
 				OLED_Blit(PP, tiles, 0 + 7 * (t%3),16,7,7, activelevel[i]->x-3 - cx,activelevel[i]->y-3);
-
-				if (iabs(activelevel[i]->x - *x) <3 && iabs(activelevel[i]->y - *y)<4)
+				if (iabs(activelevel[i]->x - *x) <4 && iabs(activelevel[i]->y - (*y-3))<5)
 				{
+					PlayPackageSound();
 					*score = *score + 1;
 					activelevel[i]->param1 = 1;
 					for(int j = 0;j<13;j++) SpawnParticle(1, *x,*y+1,(zrand()%15)-7, -(zrand()%15));
@@ -520,7 +514,9 @@ bool RenderLevel(byte *PP, int cx, int t, bool *above, bool *below, int *x, int 
 			OLED_Blit(PP, tiles, 0 + 5 * t2,23,5,9, activelevel[i]->x-3 - cx  - off[t2] + 3,activelevel[i]->y - 6-3);
 			OLED_Blit(PP, tiles, 25 + 7 * (t%2),27,7,5, activelevel[i]->x-3 - cx,activelevel[i]->y+5 - 6);
 
-			if (iabs(activelevel[i]->x - *x) <3 && iabs(activelevel[i]->y - *y-4)<5)
+//			SetPixel(pic,activelevel[i]->x - cx,activelevel[i]->y+5+5);
+
+			if (iabs(activelevel[i]->x - *x) <4 && iabs(activelevel[i]->y - (*y-5))<6)
 			{
 				*score = *score + 1;
 				return TRUE;
@@ -555,12 +551,50 @@ void UpdateTimeForMusic()
 	RT1_GetTimeMS(RT1_DeviceData, &t);
 
 	int dt = t - lastt;
-	if (t>0)
+	if (t>0 && dt>0)
 	{
-		UpdateMusic(dt);
+//		UpdateMusic(dt);
 		lastt = t;
 	}
 
+}
+/* Save status register and disable interrupts */
+extern void EnterCritical();
+extern void ExitCritical();
+
+void EnterCritical()
+{
+	do {
+		uint8_t SR_reg_local;
+		/*lint -save  -e586 -e950 Disable MISRA rule (2.1,1.1) checking. */
+		__asm (
+				"MRS R0, PRIMASK\n\t"
+				"CPSID i\n\t"
+				"STRB R0, %[output]"
+				: [output] "=m" (SR_reg_local)
+				  :: "r0");
+		/*lint -restore Enable MISRA rule (2.1,1.1) checking. */
+		if (++SR_lock == 1u) {
+			SR_reg = SR_reg_local;
+		}
+	} while(0);
+}
+
+
+
+void ExitCritical()
+{
+	do {
+		if (--SR_lock == 0u) {
+			/*lint -save  -e586 -e950 Disable MISRA rule (2.1,1.1) checking. */
+			__asm (
+					"ldrb r0, %[input]\n\t"
+					"msr PRIMASK,r0;\n\t"
+					::[input] "m" (SR_reg)
+					 : "r0");
+			/*lint -restore Enable MISRA rule (2.1,1.1) checking. */
+		}
+	} while(0);
 }
 
 
@@ -677,10 +711,11 @@ bool Game()
 
 			if (below == TRUE)
 			{
-				if(dy > 0){ dy = 0; jumped = 0;groentimer = 4;};
+				if(dy > 0){ dy = 0; jumped = 0;groentimer = 4;PlayLandSound();};
 				if ( (Button1_GetVal(0) == FALSE || Button4_GetVal(0) == FALSE) && jumped == FALSE && above == FALSE)
 				{
 					jumped = 1;
+					PlayJumpSound();
 
 					for(int j = 0;j<6;j++) SpawnParticle(1, x,y+1,(zrand()%11)-5, -(zrand()%9));
 
@@ -735,6 +770,14 @@ bool Game()
 
 		ClrPixel(pic, x-cx,y);
 		ClrPixel(pic, x-cx,y-1);
+		if (nextlevel == FALSE)
+		{
+			PlayFallSound();
+		}
+		else
+		{
+			PlayAscentSound();
+		}
 		for (int i = 0;i<32;i++)
 		{
 			UpdateTimeForMusic();

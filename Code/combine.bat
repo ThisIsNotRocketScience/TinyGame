@@ -1,0 +1,1 @@
+C:\Users\Stijn\Documents\GitHub\LoaderTools\Build\CommandLine\HexFileMerger.exe AudioBoot\Debug\AudioBoot.hex TinyGame-Bitman\Debug\TinyGame-Bitman.hex Merged.hex

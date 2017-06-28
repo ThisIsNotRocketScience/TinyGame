@@ -163,10 +163,10 @@ void TDelay(int ticks)
 
 void TI1_OnInterrupt(void)
 {
-		timerticks++;
+	//	timerticks++;
 
 
-  UpdateMusic(5);
+  UpdateMusic(1);
 }
 
 /* END Events */
